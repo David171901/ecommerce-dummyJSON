@@ -1,6 +1,7 @@
 import { RouteObject, useRoutes } from "react-router-dom";
 import { Layout } from "./components";
 import { Cart, Category, Home } from "./pages";
+import { Searcher } from "./pages/Searcher";
 
 function App() {
   const routes: RouteObject[] = [
@@ -14,8 +15,12 @@ function App() {
           index: true,
         },
         {
-          path: "category/:id",
+          path: "category/:key",
           element: <Category />,
+        },
+        {
+          path: "search",
+          element: <Searcher />,
         },
       ],
     },

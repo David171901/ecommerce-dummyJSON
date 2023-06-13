@@ -9,11 +9,6 @@ export const Navbar = () => {
             dummyJSON.
           </Link>
           <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-            <li>
-              <a className="hover:text-gray-200" href="#">
-                Home
-              </a>
-            </li>
           </ul>
           <div className="hidden xl:flex items-center space-x-5">
             <a className="flex items-center hover:text-gray-200" href="#">
@@ -58,23 +53,8 @@ export const Navbar = () => {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
           </span>
         </a>
-        <a className="navbar-burger self-center mr-12 xl:hidden" href="#">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 hover:text-gray-200"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </a>
       </nav>
     </>
+    
   );
 };

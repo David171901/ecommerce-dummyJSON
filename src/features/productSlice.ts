@@ -8,6 +8,9 @@ interface initialState {
   responseProductsByCategory: Products;
   isLoadingProductsByCategory: boolean;
   errorProductsByCategory: boolean;
+  responseProductsBySearch: Products;
+  isLoadingProductssBySearch: boolean;
+  errorProductssBySearch: boolean;
 }
 
 const initialState: initialState = {
@@ -27,12 +30,33 @@ const initialState: initialState = {
   },
   isLoadingProductsByCategory: false,
   errorProductsByCategory: false,
+  responseProductsBySearch: {
+    products: [],
+    total: 0,
+    skip: 0,
+    limit: 10,
+  },
+  isLoadingProductssBySearch: false,
+  errorProductssBySearch: false,
 };
 
 export const fetctProducts = createAsyncThunk(
   "products/fetctProducts",
   async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_HOST}/products`);
+    const res = await fetch(
+      `${import.meta.env.VITE_API_HOST}/products?limit=50`
+    );
+    const data = (await res.json()) as Products;
+    return data;
+  }
+);
+
+export const fetctProductsBySearch = createAsyncThunk(
+  "products/fetctProductsBySearch",
+  async (product: string) => {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_HOST}/products/search?q=${product}`
+    );
     const data = (await res.json()) as Products;
     return data;
   }
@@ -69,13 +93,23 @@ export const productSlice = createSlice({
       state.isLoadingProductsByCategory = true;
     });
     builder.addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-      console.log("🚀 ~ file: productSlice.ts:72 ~ builder.addCase ~ action:", action)
       state.isLoadingProductsByCategory = false;
       state.responseProductsByCategory = action.payload;
     });
     builder.addCase(fetchProductsByCategory.rejected, (state) => {
       state.isLoadingProductsByCategory = false;
       state.errorProductsByCategory = true;
+    });
+    builder.addCase(fetctProductsBySearch.pending, (state) => {
+      state.isLoadingProductssBySearch = true;
+    });
+    builder.addCase(fetctProductsBySearch.fulfilled, (state, action) => {
+      state.isLoadingProductssBySearch = false;
+      state.responseProductsBySearch = action.payload;
+    });
+    builder.addCase(fetctProductsBySearch.rejected, (state) => {
+      state.isLoadingProductssBySearch = false;
+      state.errorProductssBySearch = true;
     });
   },
 });
